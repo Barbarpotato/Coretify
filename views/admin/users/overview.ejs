@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+
+    <link rel="icon" href="/coretify.ico" type="image/svg+xml" />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/sidebars.css" rel="stylesheet">
+
+    <style>
+        h1 {
+            color: yellowgreen;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+
+        th,
+        td {
+            color: yellowgreen !important;
+        }
+    </style>
+
+</head>
+
+<body class="bg-dark">
+    <main class="d-flex">
+
+        <%- include('../../partials/sidebar.ejs') %>
+
+            <div class="px-2 py-2" id="content">
+                <div class="container mt-3">
+                    <h3 style="color: yellowgreen;">Users Overview</h3>
+
+                    <div class="mt-4">
+                        <div>
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-bs-whatever="@mdo">Register User</button>
+                            <button class="btn btn-outline-success btn-sm" hx-get="/admin/generate_signup_key"
+                                hx-target="#modalContent" hx-trigger="click" data-bs-toggle="modal"
+                                data-bs-target="#generate_token_modal">
+                                Create Signup Key
+                            </button>
+                        </div>
+                        <table class="table table-dark table-hover p-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Created</th>
+                                    <th scope="col">Updated</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (user_list.length> 0) { %>
+                                    <% user_list.forEach(function(user, index) { %>
+                                        <tr>
+                                            <td>
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td>
+                                                <%= user.username %>
+                                            </td>
+                                            <td>
+                                                <% if (user.is_active==1) { %>
+                                                    <span class="badge rounded-pill text-bg-success">Active</span>
+                                                    <% } else { %>
+                                                        <span class="badge rounded-pill text-bg-danger">Inactive</span>
+                                                        <% } %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(user.created_at).toLocaleString() %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(user.updated_at).toLocaleString() %>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-sm btn-warning dropdown-toggle" type="button"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Actions
+                                                    </button>
+                                                    <ul class="dropdown-menu" style="background-color: yellowgreen;">
+                                                        <li>
+                                                            <% if (user.is_active==1) { %>
+                                                                <form hx-post="/admin/set_inactive" hx-swap="none"
+                                                                    style="display:inline;">
+                                                                    <input type="hidden" name="username"
+                                                                        value="<%= user.username %>">
+                                                                    <button type="submit" class="dropdown-item">Set
+                                                                        Inactive</button>
+                                                                </form>
+                                                                <% } else { %>
+                                                                    <form hx-post="/admin/set_active"
+                                                                        style="display:inline;">
+                                                                        <input type="hidden" name="username"
+                                                                            value="<%= user.username %>">
+                                                                        <button type="submit" class="dropdown-item">Set
+                                                                            Active</button>
+                                                                    </form>
+                                                                    <% } %>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <tr>
+                                                    <td colspan="5">No users found.</td>
+                                                </tr>
+                                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- REGISTER USER MODAL -->
+                    <div class="modal bg-dark text-light fade" id="exampleModal" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content bg-dark">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Register User</h1>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form hx-post="/register/user" hx-swap="none">
+                                        <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Username</label>
+                                            <input name="username" type="text"
+                                                class="form-control bg-secondary text-light" id="recipient-name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">Password:</label>
+                                            <input type="password" name="password"
+                                                class="form-control bg-secondary text-light" id="message-text"></input>
+                                        </div>
+                                        <p id="error-message" style="color: red; opacity: 0.8; font-weight: 800;"></p>
+                                        <button type="submit" class="btn btn-success">Register</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SIGNUP KEY GENERATOR -->
+                    <div class="modal bg-dark text-light fade" id="generate_token_modal" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content bg-dark">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Signup Key </h1>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p style="color: yellowgreen;" class="fs-5">Share this Signup key to responsible
+                                        users to signup in Coretify
+                                        platform without Admin intervention.
+                                    </p>
+                                    <div class="shadow mb-3 bg-body rounded">
+                                        <p class="fs-5" style="font-weight: bolder; color:black;" id="modalContent"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+    </main>
+    <script src="/js/sidebars.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/htmx.min.js"></script>
+
+
+    <script>
+        document.addEventListener('htmx:afterRequest', (event) => {
+            const jsonData = event.detail.xhr.responseText;
+            try {
+                const parsedData = JSON.parse(jsonData);
+                if (parsedData.error) {
+                    document.getElementById('error-message').innerHTML = parsedData.error;
+                }
+                if (parsedData.message === "User activated successfully" || parsedData.message === "User deactivated successfully") {
+                    // added interval
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 300);
+                }
+                if (parsedData.message === "User registered successfully") {
+                    // Get the existing modal instance
+                    var modalElement = document.getElementById('exampleModal');
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+
+                    // Close the modal
+                    modalInstance.hide();
+
+                    // added interval
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 300);
+                }
+            } catch (error) {
+                console.error('Invalid JSON:', error);
+                document.getElementById('json-display').innerText = 'Failed to parse JSON';
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

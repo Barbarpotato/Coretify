@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+
+    <link rel="icon" href="/coretify.ico" type="image/svg+xml" />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/sidebars.css" rel="stylesheet">
+
+    <style>
+        h1 {
+            color: yellowgreen;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-app-select: none;
+            -moz-app-select: none;
+            app-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+
+        th,
+        td {
+            color: yellowgreen !important;
+        }
+    </style>
+
+</head>
+
+<body class="bg-dark">
+    <main class="d-flex">
+        <%- include('../../partials/sidebar.ejs') %>
+
+            <div class="px-2 py-2" id="content">
+                <div class="container mt-3">
+                    <h3 style="color: yellowgreen;">Applications Overview</h3>
+
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#register-app" data-bs-whatever="@mdo">Register App</button>
+                        <table class="table table-dark table-hover p-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">App ID</th>
+                                    <th scope="col">App Name</th>
+                                    <th scope="col">App Type</th>
+                                    <th scope="col">App URL</th>
+                                    <th scope="col">Created</th>
+                                    <th scope="col">Updated</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (application_list.length> 0) { %>
+                                    <% application_list.forEach(function(app, index) { %>
+                                        <tr>
+                                            <td>
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td>
+                                                <%= app.app_id %>
+                                            </td>
+                                            <td>
+                                                <%= app.app_name %>
+                                            </td>
+                                            <td>
+                                                <%= app.app_type %>
+                                            </td>
+                                            <td>
+                                                <a href="<%= app.app_url %>" target="_blank">
+                                                    <%= app.app_url %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%= new Date(app.created_at).toLocaleString() %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(app.updated_at).toLocaleString() %>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-sm btn-warning dropdown-toggle" type="button"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
+                                                    <ul class="dropdown-menu" style="background-color: yellowgreen;">
+                                                        <li>
+                                                            <a type="button" data-bs-toggle="modal"
+                                                                onclick="setAppDetails('<%= app.app_id %>')"
+                                                                class="dropdown-item" data-bs-target="#details"
+                                                                data-bs-whatever="@mdo">Details</a>
+                                                        </li>
+                                                        <li>
+                                                            <a type="button" data-bs-toggle="modal"
+                                                                onclick="add_user('<%= app.app_id %>')"
+                                                                class="dropdown-item" data-bs-target="#add-user"
+                                                                data-bs-whatever="@mdo">Add User</a>
+                                                        </li>
+                                                        <li>
+                                                            <a type="button"
+                                                                onclick="remove_application('<%=app.id %>')"
+                                                                class="dropdown-item">Delete App</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <tr>
+                                                    <td colspan="8">No apps found.</td>
+                                                </tr>
+                                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="modal bg-dark text-light fade  modal-lg" id="details" tabindex="-1"
+                        aria-labelledby="register-appLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content bg-dark">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="register-appLabel">
+                                        App Membership</h1>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div id="app-details" class="modal-body">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal bg-dark text-light fade" id="add-user" tabindex="-1"
+                        aria-labelledby="add-userLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content bg-dark">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="add-userLabel">Add User
+                                        To Application</h1>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form hx-post="/admin/add_user" hx-swap="none">
+                                        <div class="mb-3">
+                                            <input name="app_id" type="hidden" value=""
+                                                class="form-control bg-secondary text-light" id="app_id_add_user">
+                                            <label for="recipient-name">Select User</label>
+                                            <select name="username" class="form-select">
+                                                <% if (user_list.length> 0) { %>
+                                                    <% user_list.forEach(function(user) { %>
+                                                        <option value="<%= user.username %>">
+                                                            <%= user.username %>
+                                                        </option>
+                                                        <% }) %>
+                                                            <% } %>
+                                            </select>
+                                        </div>
+                                        <p id="error-message" style="color: red; opacity: 0.8; font-weight: 800;">
+                                        </p>
+                                        <button type="submit" class="btn btn-success">Register</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal bg-dark text-light fade" id="register-app" tabindex="-1"
+                        aria-labelledby="register-appLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content bg-dark">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="register-appLabel">Register App</h1>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form hx-post="/register/application" hx-swap="none">
+                                        <div class="mb-3">
+                                            <label for="app-name" class="col-form-label">App Name</label>
+                                            <input name="app_name" type="text"
+                                                class="form-control bg-secondary text-light" id="app-name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="app-type" class="col-form-label">App Type</label>
+                                            <input name="app_type" type="text"
+                                                class="form-control bg-secondary text-light" id="app-type">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="app-url" class="col-form-label">App URL</label>
+                                            <input name="app_url" type="text"
+                                                class="form-control bg-secondary text-light" id="app-url">
+                                        </div>
+                                        <p id="error-message" style="color: red; opacity: 0.8; font-weight: 800;"></p>
+                                        <button type="submit" class="btn btn-success">Register</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Component -->
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div id="liveToast" class="toast hide bg-dark text-light" role="alert" aria-live="assertive"
+                    aria-atomic="true">
+                    <div class="toast-header bg-dark text-light">
+                        <strong class="me-auto">System Message</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <!-- Toast content goes here -->
+                    </div>
+                </div>
+            </div>
+
+
+    </main>
+    <script src="/js/sidebars.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/htmx.min.js"></script>
+
+    <script>
+        // listening to api call request
+        document.addEventListener('htmx:afterRequest', (event) => {
+            const jsonData = event.detail.xhr.responseText;
+            try {
+                const parsedData = JSON.parse(jsonData);
+                if (parsedData.error) {
+                    document.getElementById('error-message').innerHTML = parsedData.error;
+                }
+                if (parsedData.message === "User added successfully to application") {
+                    // Get the existing modal instance
+                    var modalElement = document.getElementById('add-user');
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                    // Close the modal
+                    modalInstance.hide();
+                    // Reload the page after a short delay
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 300);
+                }
+                if (parsedData.message === "Application registered successfully") {
+                    // Get the existing modal instance
+                    var modalElement = document.getElementById('register-app');
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                    // Close the modal
+                    modalInstance.hide();
+                    // Reload the page after a short delay
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 300);
+                }
+            } catch (error) {
+                console.error('Invalid JSON:', error);
+                document.getElementById('error-message').innerText = 'Failed to parse JSON';
+            }
+        });
+
+        function setAppDetails(appId) {
+
+            fetch('/admin/user_application/' + appId)
+                .then(response => response.json())
+                .then(data => {
+                    const app_details_dom = document.getElementById('app-details');
+                    // Clear previous content
+                    app_details_dom.innerHTML = '';
+
+                    // Now create another table for user details if the user list is part of the response
+                    const userTable = document.createElement('table');
+                    userTable.classList.add('table', 'table-dark'); // Different styling for user table
+
+                    // Create the table header for user details
+                    const userThead = document.createElement('thead');
+                    const userHeaderRow = document.createElement('tr');
+
+                    // Define the headers for the user details
+                    const userHeaders = ['Username', 'Is Active', 'Created At', 'Updated At', "Action"];
+                    userHeaders.forEach(headerText => {
+                        const th = document.createElement('th');
+                        th.innerText = headerText;
+                        userHeaderRow.appendChild(th);
+                    });
+                    userThead.appendChild(userHeaderRow);
+                    userTable.appendChild(userThead);
+
+                    // Create the table body for user details
+                    const userTbody = document.createElement('tbody');
+
+                    // Assuming 'data.users' contains the array of user objects
+                    data.forEach(user => {
+                        const userRow = document.createElement('tr');
+                        userRow.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.is_active ? 'Yes' : 'No'}</td>
+                    <td>${new Date(user.created_at).toLocaleString()}</td>
+                    <td>${new Date(user.updated_at).toLocaleString()}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="remove_user(${user.user_id}, ${user.app_id})">Remove User</button>
+                    </td>
+                `;
+                        userTbody.appendChild(userRow);
+                    });
+
+                    userTable.appendChild(userTbody);
+                    app_details_dom.appendChild(userTable); // Append user details table
+                })
+        }
+
+        function add_user(appId) {
+            const input_hidden = document.getElementById('app_id_add_user');
+            input_hidden.value = appId;
+        }
+
+        function remove_user(user_id, app_id) {
+            fetch('/admin/remove_user_application', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_id, app_id })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "User removed successfully from application") {
+                        // Get the existing modal instance
+                        var modalElement = document.getElementById('add-user');
+                        var modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                        // Close the modal
+                        modalInstance.hide();
+                        // Reload the page after a short delay
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 300);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                })
+        }
+
+        function remove_application(app_id) {
+
+            var toastElement = document.getElementById('liveToast');
+            var toastBody = toastElement.querySelector('.toast-body'); // Select the toast body
+            var toast = new bootstrap.Toast(toastElement);
+
+            fetch('/admin/remove_application', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ app_id: parseInt(app_id) })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "Application removed successfully") {
+                        // Get the existing modal instance
+                        var modalElement = document.getElementById('register-app');
+                        var modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                        // Close the modal
+                        modalInstance.hide();
+                        // Reload the page after a short delay
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 300);
+                    } else {
+                        // Show the toast message
+                        toastBody.innerHTML = data.error;
+                        // Show the toast with the updated body content
+                        toast.show();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Modify the content of the toast body
+                    toastBody.innerHTML = error;
+                    // Show the toast with the updated body content
+                    toast.show();
+                })
+        }
+
+    </script>
+</body>
+
+</html>

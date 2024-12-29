@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+
+    <link rel="icon" href="/coretify.ico" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+
+        p {
+            color: white;
+        }
+
+        h1 {
+            color: greenyellow;
+        }
+
+        /* Change the active tab's text and border color to green */
+        .nav-tabs .nav-link.active {
+            color: greenyellow;
+            /* Text color */
+            border-color: greenyellow;
+            /* Border color */
+        }
+
+        /* Optional: Change the inactive tabs to have green text as well */
+        .nav-tabs .nav-link {
+            color: greenyellow;
+            /* Inactive tab text color */
+        }
+
+        /* Optional: Change hover effect for inactive tabs */
+        .nav-tabs .nav-link:hover {
+            color: greenyellow;
+            /* A lighter green on hover */
+        }
+
+        /* Basic styling for the JSON display */
+        pre {
+            background-color: greenyellow;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+
+</head>
+
+<body class="bg-dark">
+    <main>
+        <%- include('partials/navigation.ejs') %>
+
+            <h1 class="visually-hidden">Heroes examples</h1>
+
+            <div class="container col-xxl-8 px-4 py-5">
+                <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                    <div class="col-10 col-sm-8 col-lg-6">
+                        <img src="/hero.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700"
+                            height="500" loading="lazy">
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="display-2 fw-bold lh-1 mb-3">Fast Auth Setup Application
+                        </h1>
+                        <p class="lead">
+                            Coretify is a centralized login account management system designed to simplify and secure
+                            user
+                            authentication processes across multiple applications with the fast setup.</p>
+                        <a href="/documentations" target="_blank" type="button" class="btn btn-lg px-4 me-md-2 fw-bold"
+                            style="background-color: greenyellow;">Read the docs</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="b-example-divider"></div>
+
+            <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+                <div class="row align-items-center g-lg-5 py-5">
+                    <div class="col-lg-7 text-center text-lg-start">
+                        <h1 class="display-4 fw-bold lh-1 mb-3">Taste the Authentication Experience
+                        </h1>
+                        <p class="col-lg-10 fs-4">Coretify ensures efficient handling of API requests. The project
+                            leverages
+                            JWT (JSON Web Tokens) to implement secure and stateless authentication, making it easy for
+                            users
+                            to log in and manage their accounts across various services. Coretify aims to be a robust,
+                            scalable, and secure solution for centralized user account management.</p>
+                    </div>
+                    <div class="col-md-10 mx-auto col-lg-5">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home-tab-pane" type="button" role="tab"
+                                    aria-controls="home-tab-pane" aria-selected="true">Login</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                    data-bs-target="#login-tab-pane" type="button" role="tab"
+                                    aria-controls="profile-tab-pane" aria-selected="false">Authenticate</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                aria-labelledby="home-tab" tabindex="0">
+                                <form hx-post="/demo/login" hx-target="#json-display" hx-swap="innerHTML"
+                                    class="mt-2 p-4 p-md-5 border rounded-3"
+                                    style="background-color: #343a40; color: black;">
+                                    <div class="form-floating mb-3">
+                                        <input name="username" type="email" class="form-control" id="floatingInput"
+                                            placeholder="name@example.com" value="coretify@gmail.com">
+                                        <label for="floatingInput">Email address</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input name="password" type="password" class="form-control"
+                                            id="floatingPassword" placeholder="Password" value="12345">
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+                                    <button class="w-100 btn btn-lg" style="background-color: greenyellow;"
+                                        type="submit">Login</button>
+                                </form>
+                                <div class="mt-3" id="json-display"></div>
+
+                            </div>
+                            <div class="tab-pane fade" id="login-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                                tabindex="0">
+                                <form hx-post="/demo/auth" hx-target="#auth-result"
+                                    class="mt-2 p-4 p-md-5 border rounded-3"
+                                    style="background-color: #343a40; color: black;">
+                                    <div class="form-floating mb-3">
+                                        <input name="token" type="text" class="form-control" id="jwt_token"
+                                            placeholder="JWT Token">
+                                        <label for="floatingInput">Your JWT Token</label>
+                                    </div>
+
+                                    <button class="w-100 btn btn-lg" style="background-color: greenyellow;"
+                                        type="submit">Authenticate</button>
+                                </form>
+                                <div class="mt-3" id="auth-result"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="b-example-divider"></div>
+
+            <div class="container my-5">
+                <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                        <h1 class="display-4 fw-bold lh-1">Manage Users Accross Multiple Applications
+                        </h1>
+                        <p class="lead">Coretify Support Web App GUI to manage users across multiple applications.
+                            Register
+                            the Applications,
+                            Register User and bind User across multiple applications.
+                        </p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                            <a href="/admin" target="_blank" type="button" class="btn btn-lg px-4 me-md-2 fw-bold"
+                                style="background-color: greenyellow;">Visit Site</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="b-example-divider"></div>
+
+            <div class="bg-dark px-4 py-5 text-center">
+                <div class="py-5">
+                    <h1 class="display-4 fw-bold" style="color: yellowgreen;">Support Coretify</h1>
+                    <div class="col-lg-6 mx-auto">
+                        <p class="fs-5 mb-4"> Stars and Forks the Repository. You can contribute to the project by
+                            making a
+                            PR
+                            on the
+                            repository.
+                        </p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <a href="https://github.com/Barbarpotato/Coretify" target="_blank" type="button"
+                                class="btn btn-lg px-4 me-md-2 fw-bold" style="background-color: greenyellow;">Visit
+                                Github</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%- include('partials/footer.ejs') %>
+    </main>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/htmx.min.js"></script>
+
+
+    <script>
+        document.addEventListener('htmx:afterRequest', (event) => {
+            const jsonData = event.detail.xhr.responseText;
+
+            try {
+                const parsedData = JSON.parse(jsonData);
+                const formattedJson = JSON.stringify(parsedData, null, 2); // Indent with 2 spaces
+                if (parsedData.token) {
+                    document.getElementById('json-display').innerHTML = `<pre>${formattedJson}</pre>`;
+                }
+                if (parsedData.message) {
+                    document.getElementById('auth-result').innerHTML = `<pre>${formattedJson}</pre>`;
+                }
+            } catch (e) {
+                console.error('Invalid JSON:', e);
+                document.getElementById('json-display').innerText = 'Failed to parse JSON';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

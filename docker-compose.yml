@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: coretify
+    ports:
+      - "3301:3306"
+      
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: "root"  # Set Redis password
+    command: redis-server --requirepass root  # Redis will require this password
+    volumes:
+      - redis-data:/data  # Persist Redis data in a Docker volume
+
+  app:
+    image: darmajr94/coretify
+    ports:
+      - "3000:3000"
+    environment:
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: root
+      JWT_SECRET_ADMIN: admin_root
+      JWT_SECRET: root
+      DATABASE_URL: mysql://root:root@mysql:3306/coretify
+      REDIS_HOST: redis  # Use Redis service name as hostname
+      REDIS_PORT: 6379   # Default Redis port
+      REDIS_PASSWORD: root  # Redis password
+    depends_on:
+      - mysql
+      - redis
+    command: >
+      sh -c "
+      npx prisma migrate deploy &&
+      npm run start"
+
+volumes:
+  redis-data:
+    driver: local

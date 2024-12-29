@@ -1,0 +1,51 @@
+<div class="flex-shrink p-3 shadow-lg bg-transparent text-white" style="width: 280px; height: 100vh;">
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom"
+        style="color: yellowgreen !important;">
+        <img src="/hero.png" height="48" width="48" alt="Logo" />
+        <span class="fs-5 fw-semibold">Coretify Admin</span>
+    </a>
+    <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+            <button style="color: yellowgreen;" class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
+                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                Users
+            </button>
+            <div class="collapse show" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a style="color: yellowgreen !important;" href="/admin"
+                            class=" d-inline-flex text-decoration-none rounded active">Overview</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-1">
+            <button style="color: yellowgreen;" class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
+                data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                Applications
+            </button>
+            <div class="collapse show" id="dashboard-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a style="color: yellowgreen !important;" href="/admin/applications_overview"
+                            class="d-inline-flex text-decoration-none rounded">Overview</a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+
+        <li class="border-top my-3"></li>
+        <li class="mb-1">
+            <button style="color: yellowgreen;"
+                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                Account
+            </button>
+            <div class="collapse show" id="account-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/admin/logout" style="color: yellowgreen !important;"
+                            class="d-inline-flex text-decoration-none rounded">Log out</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
